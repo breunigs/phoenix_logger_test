@@ -17,8 +17,28 @@ defmodule PhoenixLoggerTest.Endpoint do
     plug Phoenix.CodeReloader
   end
 
+  # plug :sleep_a_bit
+  # defp sleep_a_bit(conn, _) do
+  #   Plug.Conn.register_before_send(conn, fn conn ->
+  #     # delay the "Sent 302 in 146µs" output of Plug.Logger a bit, to see if
+  #     # we are really the last command to be called in LogSpam
+  #     Process.sleep(2000)
+  #     conn
+  #   end)
+  # end
+
   plug Plug.RequestId
   plug Plug.Logger
+  plug :sleep_a_bit
+
+  defp sleep_a_bit(conn, _) do
+    Plug.Conn.register_before_send(conn, fn conn ->
+      # delay the "Sent 302 in 146µs" output of Plug.Logger a bit, to see if
+      # we are really the last command to be called in LogSpam
+      Process.sleep(2000)
+      conn
+    end)
+  end
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],

@@ -2,6 +2,7 @@ defmodule PhoenixLoggerTest.PageController do
   use PhoenixLoggerTest.Web, :controller
 
   def normal(conn, _params) do
+    Process.sleep(1000)
     json conn, %{"whatever" => "derp"}
   end
 
@@ -22,7 +23,7 @@ defmodule PhoenixLoggerTest.PageController do
     json conn, %{"magic" => "in plug"}
   end
   defp working_plug(conn, _) do
-    conn |> put_flash(:info, "hi from plug")
+    conn |> Plug.Conn.put_resp_header("x-test-asd", "imhelping")
   end
 
   plug :redirecting_plug when action == :plug_redirects

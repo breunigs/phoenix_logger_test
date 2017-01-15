@@ -9,7 +9,7 @@ defmodule PhoenixLoggerTest.Router do
     pipe_through :api
 
     get "/normal", PageController, :normal
-    get "/redirct", PageController, :xredirct
+    get "/redirect", PageController, :xredirect
     get "/halts", PageController, :halts
     get "/raises", PageController, :raises
 
