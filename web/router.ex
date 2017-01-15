@@ -1,5 +1,15 @@
 defmodule PhoenixLoggerTest.Router do
   use PhoenixLoggerTest.Web, :router
+  use Plug.ErrorHandler
+
+  require Logger
+
+  def handle_errors(conn, %{kind: _kind, reason: _reason, stack: stack}) do
+    IO.puts "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY "
+    # Logger.bla does not work
+    Process.sleep(2000)
+  end
+
 
   pipeline :api do
     plug :accepts, ["json"]
